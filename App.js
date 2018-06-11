@@ -12,9 +12,10 @@ import {
   View
 } from 'react-native';
 
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, StackNavigator, TabNavigator } from 'react-navigation';
 import LoginComponent from './components/login';
 import HomeComponent from './components/home';
+import ListComponent from './components/list';
 
 export default class App extends Component {
   render() {
@@ -24,9 +25,25 @@ export default class App extends Component {
   }
 }
 
-const AppStackNavigator = createStackNavigator({
-  login: LoginComponent,
-  home: HomeComponent
+const AppStackNavigator = StackNavigator({
+  login: { screen: LoginComponent},
+  home: { 
+    screen: TabNavigator({
+      home: {
+        screen: HomeComponent,
+        navigationOptions: ({ navigation }) => ({
+          title: 'Home',
+        }),
+      },
+      list: {
+        screen: ListComponent,
+        navigationOptions: ({ navigation }) => ({
+          title: 'List',
+        }),
+      }
+
+    })
+  }
 });
 
 const styles = StyleSheet.create({
